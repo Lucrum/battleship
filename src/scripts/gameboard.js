@@ -32,6 +32,15 @@ class Gameboard {
     }
   }
 
+  allSunk() {
+    for (const ship of this.ships) {
+      if (!ship.isSunk()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   // generates coordinates based on placement
   generateCoords(length, y, x, vertical) {
     let coords = [];

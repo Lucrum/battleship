@@ -24,5 +24,9 @@ describe("gameboard", () => {
 
   test("reports on whether all ships have been sunk", () => {
     expect(board.allSunk()).toBe(false);
+    board.receiveAttack(0, 0);
+    board.receiveAttack(0, 1);
+    board.receiveAttack(0, 2);
+    expect(board.allSunk()).toBe(true);
   });
 });
