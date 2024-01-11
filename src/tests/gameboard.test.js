@@ -22,6 +22,11 @@ describe("gameboard", () => {
     expect(board.receiveAttack(0, 0)).toBe(true);
   });
 
+  test("cannot receive repeated attacks", () => {
+    expect(board.receiveAttack(0, 0)).toBe(true);
+    expect(board.receiveAttack(0, 0)).toBe(false);
+  });
+
   test("reports on whether all ships have been sunk", () => {
     expect(board.allSunk()).toBe(false);
     board.receiveAttack(0, 0);

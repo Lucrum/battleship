@@ -5,6 +5,7 @@ class Gameboard {
       .fill(undefined)
       .map(() => new Array(this.dimensions).fill(undefined));
     this.ships = [];
+    this.hitPositions = [];
   }
 
   // placing a piece horizontally always goes from left -> right
@@ -22,7 +23,24 @@ class Gameboard {
     });
   }
 
+  // checks if coordinates were already hit
+  searchCoords(x, y) {
+    for (const [a, b] of this.hitPositions) {
+      if (a === x && b === y) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // add valid attacks to hit positions, reject duplicate ones
+  // only returns true if it hits a ship
   receiveAttack(x, y) {
+    if (this.searchCoords(x, y)) {
+      return false;
+    } else {
+      this.hitPositions.push([x, y]);
+    }
     const shipIndex = this.checkPositions([[x, y]]);
     if (shipIndex !== undefined) {
       this.ships[shipIndex].hit();
