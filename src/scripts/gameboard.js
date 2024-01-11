@@ -22,6 +22,16 @@ class Gameboard {
     });
   }
 
+  receiveAttack(x, y) {
+    const shipIndex = this.checkPositions([[x, y]]);
+    if (shipIndex !== undefined) {
+      this.ships[shipIndex].hit();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // generates coordinates based on placement
   generateCoords(length, y, x, vertical) {
     let coords = [];

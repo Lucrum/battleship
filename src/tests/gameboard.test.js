@@ -19,6 +19,7 @@ describe("gameboard", () => {
 
   test("can receive attacks", () => {
     expect(board.receiveAttack(1, 2)).toBe(false);
+    expect(board.receiveAttack(0, 0)).toBe(true);
   });
 
   test("reports on whether all ships have been sunk", () => {
