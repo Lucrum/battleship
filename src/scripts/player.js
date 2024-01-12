@@ -1,5 +1,6 @@
 class Player {
-  constructor(computer) {
+  constructor(name, computer) {
+    this.name = name;
     this.computer = computer;
   }
 
@@ -8,10 +9,6 @@ class Player {
     if (this.computer) {
       this.randomMove(attackFunction);
       return true;
-    } else {
-      // wait for player to pick
-      // probably activate the board somehow
-      gameBoard.allowPlayerInput();
     }
   }
 
