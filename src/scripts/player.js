@@ -1,3 +1,5 @@
+const { getRandomInt } = require("./utils");
+
 class Player {
   constructor(name, computer) {
     this.name = name;
@@ -13,16 +15,24 @@ class Player {
   }
 
   randomMove(attackFunction) {
-    let x = this.getRandomInt(10);
-    let y = this.getRandomInt(10);
+    let [x, y] = this.randomCoordinates();
     while (attackFunction(x, y) !== true) {
-      x = this.getRandomInt(10);
-      y = this.getRandomInt(10);
+      [x, y] = this.randomCoordinates();
     }
   }
 
-  getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+  randomPlacement(piece, placePiece) {
+    let [x, y] = this.randomCoordinates();
+    let vertical = getRandomInt(2) ? true : false; // if 0, false, if 1, true
+
+    while (placePiece(piece, x, y, vertical) !== true) {
+      [x, y] = this.randomCoordinates();
+      vertical = getRandomInt(2) ? true : false;
+    }
+  }
+
+  randomCoordinates() {
+    return [getRandomInt(10), getRandomInt(10)];
   }
 }
 
