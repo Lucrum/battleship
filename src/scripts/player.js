@@ -14,20 +14,23 @@ class Player {
     }
   }
 
-  randomMove(attackFunction) {
+  randomMove(board) {
     let [x, y] = this.randomCoordinates();
-    while (attackFunction(x, y) !== true) {
+    while (board.receiveAttack(x, y) !== true) {
       [x, y] = this.randomCoordinates();
     }
   }
 
-  randomPlacement(piece, placePiece) {
+  randomPlacement(pieces, board) {
     let [x, y] = this.randomCoordinates();
     let vertical = getRandomInt(2) ? true : false; // if 0, false, if 1, true
-
-    while (placePiece(piece, x, y, vertical) !== true) {
-      [x, y] = this.randomCoordinates();
-      vertical = getRandomInt(2) ? true : false;
+    for (let i = 0; i < pieces.length; i += 1) {
+      console.log("placing piece", pieces[i], "on board", board);
+      while (board.placePiece(pieces[i], x, y, vertical) !== true) {
+        [x, y] = this.randomCoordinates();
+        vertical = getRandomInt(2) ? true : false;
+        console.log("placing piece at", x, y, vertical);
+      }
     }
   }
 
