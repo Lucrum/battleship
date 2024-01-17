@@ -10,9 +10,11 @@ describe("gameboard", () => {
 
   test("cannot place invalid pieces", () => {
     shipOverlap = new ships.Ship(2);
+    shipAdjacent = new ships.Ship(3);
     shipOutOfY = new ships.Ship(4);
     shipOutOfX = new ships.Ship(3);
     expect(board.placePiece(shipOverlap, 0, 1, true)).toBe(false);
+    expect(board.placePiece(shipAdjacent, 1, 0, false)).toBe(false);
     expect(board.placePiece(shipOutOfY, 7, 5, true)).toBe(false);
     expect(board.placePiece(shipOutOfX, 3, 8, false)).toBe(false);
   });

@@ -25,6 +25,9 @@ function generateEnemyBoard(gameboard) {
         "cell",
         gameboard.board[i][j] === undefined ? "empty" : "hit"
       );
+      cell.dataset.row = i;
+      cell.dataset.col = j;
+      cell.textContent = gameboard.board[i][j];
       cellList.push(cell);
     }
   }

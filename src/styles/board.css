@@ -7,10 +7,25 @@ div.board {
 div.game-container {
   display: flex;
   justify-content: space-between;
+  margin: 100px;
+  gap: 50px;
+  flex-wrap: wrap;
 }
 
 div.cell {
   height: 40px;
   width: 40px;
   border: 1px solid black;
+}
+
+div.cell.empty {
+  background-color: whitesmoke;
+}
+
+div.cell.occupied {
+  background-color: lightblue;
+}
+
+div.cell.hit {
+  background-color: red;
 }

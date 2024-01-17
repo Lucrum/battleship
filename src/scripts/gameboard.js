@@ -14,13 +14,19 @@ class Gameboard {
     let validCoordinates = this.validatePlacement(piece.length, y, x, vertical);
 
     if (!validCoordinates) {
+      console.log("reject piece");
       return false;
     }
     this.ships.push(piece);
     let shipIndex = this.ships.length - 1;
-    validCoordinates.forEach(([yCoord, xCoord]) => {
-      this.board[yCoord][xCoord] = shipIndex;
-    });
+
+    for (const [[yCoord, xCoord], real] of validCoordinates) {
+      if (real) {
+        this.board[yCoord][xCoord] = shipIndex;
+      }
+    }
+    console.log("placed piece");
+    return true;
   }
 
   // checks if coordinates were already hit
@@ -59,24 +65,87 @@ class Gameboard {
     return true;
   }
 
+  addEndcaps(length, y, x, vertical) {
+    const coords = [];
+    if (vertical) {
+      if (y > 0) {
+        // checking before the ship
+        coords.push([[y - 1, x], false]);
+        if (x > 0) {
+          coords.push([[y - 1, x - 1], false]);
+        }
+        if (x < 9) {
+          coords.push([[y - 1, x + 1], false]);
+        }
+      }
+      if (y < 9) {
+        // checking after the ship
+        coords.push([[y + length, x], false]);
+        if (x > 0) {
+          coords.push([[y + length, x - 1], false]);
+        }
+        if (x < 9) {
+          coords.push([[y + length, x + 1], false]);
+        }
+      }
+    } else {
+      if (x > 0) {
+        // checking before the ship
+        coords.push([[y, x - 1], false]);
+        if (y > 0) {
+          coords.push([[y - 1, x - 1], false]);
+        }
+        if (y < 9) {
+          coords.push([[y + 1, x - 1], false]);
+        }
+      }
+      if (x < 9) {
+        // checking after the ship
+        coords.push([[y, x + length], false]);
+        if (y > 0) {
+          coords.push([[y - 1, x + length], false]);
+        }
+        if (y < 9) {
+          coords.push([[y + 1, x + length], false]);
+        }
+      }
+    }
+    console.log("endcaps", coords);
+    return coords;
+  }
+
   // generates coordinates based on placement
+  // coordinates in the format [[row, column], <adjacency check boolean>]
   generateCoords(length, y, x, vertical) {
     let coords = [];
 
     for (let i = 0; i < length; i += 1) {
       if (vertical) {
-        coords.push([y + i, x]);
+        coords.push([[y + i, x], true]);
+        if (x > 0) {
+          coords.push([[y + i, x - 1], false]);
+        }
+        if (x < 9) {
+          coords.push([[y + i, x + 1], false]);
+        }
       } else {
-        coords.push([y, x + i]);
+        coords.push([[y, x + i], true]);
+        if (y > 0) {
+          coords.push([[y - 1, x + i], false]);
+        }
+        if (y < 9) {
+          coords.push([[y + 1, x + i], false]);
+        }
       }
     }
+    coords.push(...this.addEndcaps(length, y, x, vertical));
     return coords;
   }
 
   // checks a list of coordinates to see if there's a piece
   // returns the piece's index if so
   checkPositions(coords) {
-    for (const [y, x] of coords) {
+    for (const [[y, x], _] of coords) {
       if (this.board[y][x] !== undefined) {
         return this.board[y][x];
       }
@@ -96,6 +165,7 @@ class Gameboard {
 
     // checking for existing pieces by 'allocating' the space and checking each coord
     let coordinateList = this.generateCoords(length, y, x, vertical);
+    console.log(coordinateList);
 
     if (this.checkPositions(coordinateList) === undefined) {
       return coordinateList;
