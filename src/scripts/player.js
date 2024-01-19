@@ -1,17 +1,13 @@
 const { getRandomInt } = require("./utils");
 
 class Player {
-  constructor(name, computer) {
+  constructor(name) {
     this.name = name;
-    this.computer = computer;
   }
 
   takeTurn(attackFunction) {
     // ai will randomly choose a spot on the board to attack
-    if (this.computer) {
-      this.randomMove(attackFunction);
-      return true;
-    }
+    return this.randomMove(attackFunction);
   }
 
   randomMove(board) {
@@ -19,6 +15,7 @@ class Player {
     while (board.receiveAttack(x, y) !== true) {
       [x, y] = this.randomCoordinates();
     }
+    return true;
   }
 
   randomPlacement(pieces, board) {
