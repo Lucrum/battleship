@@ -5,9 +5,9 @@ class Player {
     this.name = name;
   }
 
-  takeTurn(attackFunction) {
+  takeTurn(board) {
     // ai will randomly choose a spot on the board to attack
-    return this.randomMove(attackFunction);
+    return this.randomMove(board);
   }
 
   randomMove(board) {
