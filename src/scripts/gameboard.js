@@ -30,9 +30,9 @@ class Gameboard {
   }
 
   // checks if coordinates were already hit
-  searchCoords(x, y) {
+  searchCoords(y, x) {
     for (const [a, b] of this.hitPositions) {
-      if (a === x && b === y) {
+      if (a === y && b === x) {
         return true;
       }
     }
@@ -41,13 +41,13 @@ class Gameboard {
 
   // add valid attacks to hit positions, reject duplicate ones
   // only returns true if it hits a ship
-  receiveAttack(x, y) {
-    if (this.searchCoords(x, y)) {
+  receiveAttack(y, x) {
+    if (this.searchCoords(y, x)) {
       return false;
     } else {
-      this.hitPositions.push([x, y]);
+      this.hitPositions.push([y, x]);
     }
-    const shipIndex = this.checkPositions([[x, y]]);
+    const shipIndex = this.checkPositions([[y, x]]);
     if (shipIndex !== undefined) {
       this.ships[shipIndex].hit();
       return true;
