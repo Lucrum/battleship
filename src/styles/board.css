@@ -7,9 +7,9 @@ div.board {
 div#boards {
   display: flex;
   justify-content: space-between;
-  margin: 100px;
   gap: 50px;
   flex-wrap: wrap;
+  margin-top: 100px;
 }
 
 div.cell {
@@ -35,4 +35,12 @@ div.cell.hit {
 
 div.cell.miss {
   background-color: lightseagreen;
+}
+
+@media (max-width: 1150px) {
+  div#boards {
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
+  }
 }
