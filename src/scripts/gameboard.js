@@ -40,14 +40,14 @@ class Gameboard {
   }
 
   // add valid attacks to hit positions, reject duplicate ones
-  // only returns true if it hits a ship
+  // returns true for hit, false for miss, undefined for duplicates
   receiveAttack(y, x) {
     if (this.searchCoords(y, x)) {
-      return false;
+      return undefined;
     } else {
       this.hitPositions.push([y, x]);
     }
-    const shipIndex = this.checkPositions([[y, x]]);
+    const shipIndex = this.checkPosition(y, x);
     if (shipIndex !== undefined) {
       this.ships[shipIndex].hit();
       return true;
@@ -140,6 +140,12 @@ class Gameboard {
     }
     coords.push(...this.addEndcaps(length, y, x, vertical));
     return coords;
+  }
+
+  // checks a single coordinate point
+  // returns piece's index if success
+  checkPosition(y, x) {
+    return this.board[y][x];
   }
 
   // checks a list of coordinates to see if there's a piece

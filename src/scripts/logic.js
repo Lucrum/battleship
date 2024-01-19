@@ -2,20 +2,61 @@ import { Gameboard } from "./gameboard";
 import { Player } from "./player";
 import { getRandomInt } from "./utils";
 import { Ship } from "./ship";
-import { renderBoards } from "./ui";
+import { renderBoards, updateCellAttack, updateCellMiss } from "./ui";
 import "../styles/board.css";
 import "../styles/general.css";
 
-let gameStart = false;
+let playerTurn = false;
 
 const randomNames = ["SAM", "The Annihilator", "Conversation PGT-9000", "Nino"];
+let ai = new Player(randomNames[getRandomInt(randomNames.length)], true);
+let aiBoard = generateBoard(ai, new Gameboard());
+let playerBoard = generateBoard(ai, new Gameboard());
+
+function placePiece(cell) {
+  console.log(cell);
+}
+
+function aiTurn() {
+  let [row, col, hit] = ai.randomMove(playerBoard);
+  const cell = document.querySelector(
+    `div.cell[data-row="${row}"][data-col="${col}"]`
+  );
+  if (hit) {
+    updateCellAttack(cell);
+  } else {
+    updateCellMiss(cell);
+  }
+  playerTurn = true;
+}
+
+function playerAttackPosition(cell) {
+  console.log(cell, cell.dataset.row, cell.dataset.col);
+  if (playerTurn && cell.dataset.hit == undefined) {
+    console.log("attacking");
+    if (aiBoard.receiveAttack(cell.dataset.row, cell.dataset.col)) {
+      updateCellAttack(cell);
+    } else {
+      updateCellMiss(cell);
+    }
+    cell.dataset.hit = true;
+    playerTurn = false;
+    aiTurn();
+  }
+}
+
+function startGame() {
+  playerTurn = true;
+  console.log(playerTurn);
+}
 
 function newGame() {
-  const playerBoard = new Gameboard();
-  const ai = new Player(randomNames[getRandomInt(randomNames.length)], true);
-  let aiBoard = generateBoard(ai, new Gameboard());
+  ai = new Player(randomNames[getRandomInt(randomNames.length)], true);
+  aiBoard = generateBoard(ai, new Gameboard());
+  playerBoard = generateBoard(ai, new Gameboard());
 
-  renderBoards(playerBoard, aiBoard);
+  renderBoards(playerBoard, aiBoard, placePiece, playerAttackPosition);
+  startGame();
 }
 
 function generateBoard(ai, board) {

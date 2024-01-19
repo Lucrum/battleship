@@ -29,3 +29,7 @@ div.cell.occupied {
 div.cell.hit {
   background-color: red;
 }
+
+div.cell.miss {
+  background-color: lightseagreen;
+}

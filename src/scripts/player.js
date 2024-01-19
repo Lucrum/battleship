@@ -5,17 +5,15 @@ class Player {
     this.name = name;
   }
 
-  takeTurn(board) {
-    // ai will randomly choose a spot on the board to attack
-    return this.randomMove(board);
-  }
-
+  // ai will randomly choose a spot on the board to attack
   randomMove(board) {
-    let [x, y] = this.randomCoordinates();
-    while (board.receiveAttack(x, y) !== true) {
-      [x, y] = this.randomCoordinates();
+    let [y, x] = this.randomCoordinates();
+    let hit = board.receiveAttack(y, x);
+    while (hit == undefined) {
+      [y, x] = this.randomCoordinates();
+      hit = board.receiveAttack(y, x);
     }
-    return true;
+    return [y, x, hit];
   }
 
   randomPlacement(pieces, board) {

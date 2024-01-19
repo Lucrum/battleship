@@ -11,15 +11,27 @@ function generateBoard(gameboard, player, playerClickFunction) {
         cell.classList.add(
           gameboard.board[i][j] === undefined ? "empty" : "occupied"
         );
+      } else {
+        // render as enemy
       }
       cell.dataset.row = i;
       cell.dataset.col = j;
       cell.textContent = gameboard.board[i][j];
-      cell.addEventListener(() => playerClickFunction(i, j));
+      cell.addEventListener("click", (e) => playerClickFunction(e.target));
       cellList.push(cell);
     }
   }
   return cellList;
+}
+
+export function updateCellAttack(cell) {
+  cell.classList.add("hit");
+  cell.textContent = "X";
+}
+
+export function updateCellMiss(cell) {
+  cell.classList.add("miss");
+  cell.textContent = ".";
 }
 
 export function renderBoards(
