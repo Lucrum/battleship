@@ -14,7 +14,6 @@ class Gameboard {
     let validCoordinates = this.validatePlacement(piece.length, y, x, vertical);
 
     if (!validCoordinates) {
-      console.log("reject piece");
       return false;
     }
     this.ships.push(piece);
@@ -25,7 +24,6 @@ class Gameboard {
         this.board[yCoord][xCoord] = shipIndex;
       }
     }
-    console.log("placed piece");
     return true;
   }
 
@@ -41,6 +39,7 @@ class Gameboard {
 
   // add valid attacks to hit positions, reject duplicate ones
   // returns true for hit, false for miss, undefined for duplicates
+  // returns [hit status, sink status]
   receiveAttack(y, x) {
     if (this.searchCoords(y, x)) {
       return undefined;
@@ -50,9 +49,12 @@ class Gameboard {
     const shipIndex = this.checkPosition(y, x);
     if (shipIndex !== undefined) {
       this.ships[shipIndex].hit();
-      return true;
+      if (this.ships[shipIndex].isSunk()) {
+        return [true, true];
+      }
+      return [true, false];
     } else {
-      return false;
+      return [false, false];
     }
   }
 
@@ -110,7 +112,6 @@ class Gameboard {
         }
       }
     }
-    console.log("endcaps", coords);
     return coords;
   }
 
@@ -171,7 +172,6 @@ class Gameboard {
 
     // checking for existing pieces by 'allocating' the space and checking each coord
     let coordinateList = this.generateCoords(length, y, x, vertical);
-    console.log(coordinateList);
 
     if (this.checkPositions(coordinateList) === undefined) {
       return coordinateList;

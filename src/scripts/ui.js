@@ -16,12 +16,17 @@ function generateBoard(gameboard, player, playerClickFunction) {
       }
       cell.dataset.row = i;
       cell.dataset.col = j;
-      cell.textContent = gameboard.board[i][j];
+      // cell.textContent = gameboard.board[i][j];
       cell.addEventListener("click", (e) => playerClickFunction(e.target));
       cellList.push(cell);
     }
   }
   return cellList;
+}
+
+export function renderMessage(message) {
+  const messageArea = document.querySelector("p#messages");
+  messageArea.textContent = message;
 }
 
 export function updateCellAttack(cell) {

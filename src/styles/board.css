@@ -4,7 +4,7 @@ div.board {
   grid-template-rows: repeat(10, 1fr);
 }
 
-div.game-container {
+div#boards {
   display: flex;
   justify-content: space-between;
   margin: 100px;
@@ -16,6 +16,9 @@ div.cell {
   height: 40px;
   width: 40px;
   border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 div.cell.empty {
