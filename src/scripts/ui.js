@@ -31,12 +31,12 @@ export function renderMessage(message) {
 
 export function updateCellAttack(cell) {
   cell.classList.add("hit");
-  cell.textContent = "X";
+  cell.textContent = "✖";
 }
 
 export function updateCellMiss(cell) {
   cell.classList.add("miss");
-  cell.textContent = ".";
+  cell.textContent = "•";
 }
 
 export function renderBoards(

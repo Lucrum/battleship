@@ -24,9 +24,7 @@ let ai = new Player(randomNames[getRandomInt(randomNames.length)], true);
 let aiBoard = generateBoard(ai, new Gameboard());
 let playerBoard = generateBoard(ai, new Gameboard());
 
-function placePiece(cell) {
-  console.log(cell);
-}
+function placePiece(cell) {}
 
 function aiTurn() {
   let [row, col, hit] = ai.randomMove(playerBoard);

@@ -21,20 +21,24 @@ div.cell {
   align-items: center;
 }
 
-div.cell.empty {
-  background-color: whitesmoke;
+div.cell:hover {
+  cursor: pointer;
 }
 
-div.cell.occupied {
+div.cell {
   background-color: lightblue;
 }
 
+div.cell.occupied {
+  background-color: slategray;
+}
+
 div.cell.hit {
-  background-color: red;
+  background-color: #f78337;
 }
 
 div.cell.miss {
-  background-color: lightseagreen;
+  background-color: steelblue;
 }
 
 @media (max-width: 1150px) {
